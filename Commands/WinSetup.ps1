@@ -1,26 +1,26 @@
 # Self-Elevate
-If (-Not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]'Administrator')) {
+if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]'Administrator')) {
 
-    $CommandLine = "-File """ + $MyInvocation.MyCommand.Path + """ " + $MyInvocation.UnboundArguments
-    Start-Process -FilePath ConHost -Verb Runas -ArgumentList PowerShell, $CommandLine
-    Exit
+	$CommandLine = "-File """ + $MyInvocation.MyCommand.Path + """ " + $MyInvocation.UnboundArguments
+	Start-Process -FilePath ConHost -Verb Runas -ArgumentList PowerShell, $CommandLine
+	exit
 
 }
 
 # Rename Computer
-If ($Env:ComputerName -In ("WINDOWS-PC", "WINDOWS-11-PC", "VIRTUALBOX")) {
+if ($Env:ComputerName -in ("WINDOWS-PC", "WINDOWS-11-PC", "VIRTUALBOX")) {
 
-    Write-Host "`nRenaming Computer..." -ForegroundColor Green
-    $ComputerName = Read-Host "Enter a name for the computer"
-    If ($ComputerName -Ne $Env:ComputerName) { Rename-Computer $ComputerName -Force }
+	Write-Host "`nRenaming Computer..." -ForegroundColor Green
+	$ComputerName = Read-Host "Enter a name for the computer"
+	if ($ComputerName -ne $Env:ComputerName) { Rename-Computer $ComputerName -Force }
 
 }
 
 # Rename Volume
-If ((Get-Volume -DriveLetter C).FileSystemLabel -Ne "Windows 11") {
+if ((Get-Volume -DriveLetter C).FileSystemLabel -ne "Windows 11") {
 
-    Write-Host "`nRenaming Volume..." -ForegroundColor Green
-    Set-Volume -DriveLetter C -NewFileSystemLabel "Windows 11"
+	Write-Host "`nRenaming Volume..." -ForegroundColor Green
+	Set-Volume -DriveLetter C -NewFileSystemLabel "Windows 11"
 
 }
 
@@ -37,11 +37,11 @@ Remove-Item "HKLM:\Software\Startup" -Recurse -Force -ea Ignore
 Invoke-Expression "& C:\Windows\Startup.ps1 update"
 
 # Setup Users
-If ((Get-LocalUser "Administrador").Enabled) {
+if ((Get-LocalUser "Administrador").Enabled) {
 
-    Write-Host "`nSetting Users..." -ForegroundColor Green
-    Disable-LocalUser -Name "Administrador"
-    Start-Process "ms-settings:workplace"
+	Write-Host "`nSetting Users..." -ForegroundColor Green
+	Disable-LocalUser -Name "Administrador"
+	Start-Process "ms-settings:workplace"
 
 }
 

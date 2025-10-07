@@ -22,7 +22,7 @@ Public Sub FolderSelect()
     End If
 
     Result = MsgBox("Done!" & vbNewLine & i & " folder(s) have been fixed.", vbInfo, "Fix Imported IMAP Folders")
-  
+
     Set F = Nothing
     Set Folders = Nothing
     Set objOutlook = Nothing
@@ -31,7 +31,7 @@ End Sub
 
 Private Sub LoopFolders(Folders)
   Dim F
-  
+
   For Each F In Folders
     FixIMAPFolder(F)
     LoopFolders F.Folders

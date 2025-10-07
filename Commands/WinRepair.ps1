@@ -1,9 +1,9 @@
 # Self-Elevate
-If (-Not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]'Administrator')) {
+if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]'Administrator')) {
 
-    $CommandLine = "-File """ + $MyInvocation.MyCommand.Path + """ " + $MyInvocation.UnboundArguments
-    Start-Process -FilePath ConHost -Verb Runas -ArgumentList PowerShell, $CommandLine
-    Exit
+	$CommandLine = "-File """ + $MyInvocation.MyCommand.Path + """ " + $MyInvocation.UnboundArguments
+	Start-Process -FilePath ConHost -Verb Runas -ArgumentList PowerShell, $CommandLine
+	exit
 
 }
 
